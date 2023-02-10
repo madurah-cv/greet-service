@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: greeting-module-configmap
+  namespace: greet-namespace
+data:
+  SPRING_PROFILES_ACTIVE: development
+  test: Hello
+  test1: GHIJK

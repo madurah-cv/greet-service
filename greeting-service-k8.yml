@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-dep
+  namespace: greet-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: greeting-app
+  template:
+    metadata:
+      labels:
+        app: greeting-app
+    spec:
+      containers:
+        - name: greeting-container
+          image: maduraherath/greet-service:0.0.7
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: greeting-module-configmap
+                  key: SPRING_PROFILES_ACTIVE
+            - name: test
+              valueFrom:
+                configMapKeyRef:
+                  name: greeting-module-configmap
+                  key: test
+            - name: test1
+              valueFrom:
+                configMapKeyRef:
+                  name: greeting-module-configmap
+                  key: test1
+
+          ports:
+            - containerPort: 8080
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: greet-service
+  namespace: greet-namespace
+spec:
+  selector:
+    app: greeting-app
+  type: LoadBalancer
+  ports:
+    - port: 8084
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30001
