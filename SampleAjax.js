@@ -19,7 +19,7 @@ export const AjaxModule: AjaxModuleSchema = {
 
 
  function getUserName(name, config) {
-    const url = "https://5250-112-135-222-22.ap.ngrok.io/greeting";
+    const url = "https://6477-112-135-201-140.ap.ngrok.io/greeting";
     const payload = JSON.stringify({ name: name });
   
     return fetch(url, {
